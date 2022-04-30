@@ -5,6 +5,8 @@ add_compile_options(${COMP_FLAGS})
 find_package(GTest)
 find_package(Threads)
 
+set (CMAKE_CXX_COMPILER "/usr/bin/g++-10")
+
 include_directories( placedata 
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
