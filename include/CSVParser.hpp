@@ -1,6 +1,7 @@
 #pragma once
 #include "Data.hpp"
 #include "Placement.hpp"
+#include <concepts>
 
 namespace PlaceDataLib
 {
