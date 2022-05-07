@@ -2,5 +2,4 @@
 
 namespace PlaceDataLib
 {
-    
 } // End Namespace

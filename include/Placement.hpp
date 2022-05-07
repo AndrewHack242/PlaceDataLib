@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include <memory>
 #include "DataPoint.hpp"
 
 namespace PlaceDataLib
@@ -13,29 +14,31 @@ namespace PlaceDataLib
         ///////////////////////
         //   Constructors    //
         ///////////////////////
-        Placement(std::vector<dataFormat> dataFormats);
+        Placement() { }
+        //Placement(std::vector<dataFormat> dataFormats) { }
 
         ///////////////////////
         // GETTERS / SETTERS //
         ///////////////////////
-        //template <dataFormat format, typename T = typename TypeSelector<format>::type>
-        //bool setData(T data)
-        //{
-        //    return dataPoints.emplace(format,data);
-        //}
+        template <dataFormat format, typename T = typename TypeSelector<format>::type>
+        bool setData(FormattedDataPoint<format> data)
+        {
+            return dataPoints.emplace(format,std::make_unique<FormattedDataPoint<format>>(data)).second;
+        }
 
         ///////////////////////
         // PUBLIC  FUNCTIONS //
         ///////////////////////
-        //template <dataFormat format, typename RT = typename TypeSelector<format>::type>
-        //RT getDataForFormat()
-        //{
-        //    if (dataPoints.find(format) != dataPoints.end())
-        //    {
-        //        return static_cast<FormattedDataPoint<format>>(dataPoints.at(format));
-        //    }
-        //}
-
+        template <dataFormat format, typename RT = typename TypeSelector<format>::type>
+        std::optional<RT> getDataFromFormat()
+        {
+            if (dataPoints.find(format) != dataPoints.end())
+            {
+                return *dynamic_cast<FormattedDataPoint<format>*>(dataPoints.at(format).get());
+            }
+            return std::nullopt;
+        }
+        
     private:
         ///////////////////////
         // PRIVATE MEMBERS   //
