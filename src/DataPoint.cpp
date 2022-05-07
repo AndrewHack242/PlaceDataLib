@@ -2,5 +2,5 @@
 
 namespace PlaceDataLib
 {
-    
+    DataPoint::~DataPoint(){ }
 } // End Namespace

@@ -7,15 +7,15 @@ namespace PlaceDataLib
 
     class DataPoint
     {
-        
+    public:
+        virtual ~DataPoint();
     };
-
 
 
 
     // use template metaprogramming to convert enum to desired storage type
     template<dataFormat format, typename type = typename TypeSelector<format>::type>
-    class FormattedDataPoint : DataPoint
+    class FormattedDataPoint : public DataPoint
     {
     public:
 
@@ -36,6 +36,9 @@ namespace PlaceDataLib
 
         //store value in a smart pointer.
         type data;
+
+        ~FormattedDataPoint(){ }
+
     };
 
 } // End Namespace
